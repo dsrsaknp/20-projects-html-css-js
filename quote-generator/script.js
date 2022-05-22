@@ -8,48 +8,44 @@ let loader = document.getElementById('loader');
 // global variable
 let apiQuotes = [];
 
-// Show loading
-function loading() {
+function showLoadingSpinner() {
     loader.hidden = false;
     quoteContainerElement.hidden = true;
 }
 
-// Hide loading
-function complete() {
+function removeLoadingSpinner() {
     quoteContainerElement.hidden = false;
     loader.hidden = true;
 }
 
 // Randomly pick a quote
-function newQuote() {
-    loading();
+function pickRandomNewQuote() {
+    showLoadingSpinner();
     const numOfQuotes = apiQuotes.length;
     let quote = apiQuotes[Math.floor(Math.random() * numOfQuotes)];
     authorTextElement.textContent = quote.author || 'Unknown';
-    if(quote.text.length > 120) {
+    if (quote.text.length > 120) {
         quoteTextElement.classList.add('long-quote');
     } else {
         quoteTextElement.classList.remove('long-quote');
     }
     quoteTextElement.textContent = quote.text;
-    complete();
+    removeLoadingSpinner();
 }
 
-// Get Quotes from API
-async function getQuotes() {
-    loading();
+async function getQuotesFromAPI() {
+    showLoadingSpinner();
     const apiUrl = 'https://type.fit/api/quotes';
     try {
         const response = await fetch(apiUrl);
         apiQuotes = await response.json();
-        newQuote();
-    } 
-    catch(error) {
+        pickRandomNewQuote();
+    }
+    catch (error) {
         // Error goes here.
-    } 
+    }
 }
 
-// Tweet quote
 function tweetQuote() {
     const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteTextElement.textContent}-${authorTextElement.textContent}`;
     window.open(twitterUrl, '_blank');
@@ -57,6 +53,26 @@ function tweetQuote() {
 twitterBtn.addEventListener('click', tweetQuote);
 
 // Load new quote
-newQuoteBtn.addEventListener('click', newQuote);
+newQuoteBtn.addEventListener('click', pickRandomNewQuote);
 
-getQuotes();
+getQuotesFromAPI();
+
+
+// // CORS scenario in an API example below
+
+// // Get random quotes from third party url
+// async function getQuote() {
+//     const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+//     const apiUrl = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
+//     try {
+//         const response = await fetch(proxyUrl + apiUrl);
+//         const data = await response.json();
+//         console.log(data);
+//     }
+//     catch (error) {
+//         // getQuote();
+//         console.log(`woops!! no quote - ${error}`);
+//     }
+// }
+
+// getQuote();
