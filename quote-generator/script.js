@@ -23,7 +23,7 @@ function pickRandomNewQuote() {
     showLoadingSpinner();
     const numOfQuotes = apiQuotes.length;
     let quote = apiQuotes[Math.floor(Math.random() * numOfQuotes)];
-    authorTextElement.textContent = quote.author || 'Unknown';
+    authorTextElement.textContent = quote.author || 'Unknown';  // innerText is non-standard
     if (quote.text.length > 120) {
         quoteTextElement.classList.add('long-quote');
     } else {
@@ -43,6 +43,9 @@ async function getQuotesFromAPI() {
     }
     catch (error) {
         // Error goes here.
+        console.log(`woops!! no quote - ${error}`);
+        // Based on the error status code, we can make call again to the function, 
+        // and to avoid infinte recursive calls a limit should be set using a loop.
     }
 }
 
