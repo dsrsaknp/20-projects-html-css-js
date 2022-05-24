@@ -39,7 +39,7 @@ function displayPhotos() {
         // Create <a> tag to link to Unsplash
         const a = document.createElement('a');
         setAttributes(a, {
-            href: 'photo.links.html',
+            href: photo.links.html,
             target: '_blank'
         });
 
