@@ -1,13 +1,10 @@
-let api_access_key = require('apikeys');
-
 // DOM elements
 const imageContainerElement = document.getElementById('image-container');
 const loader = document.getElementById('loader');
 
 // global variables
-const api_access_key = 'API_KEY';
-const api_secret_key = 'API_SECRET';
-let count = 5;
+const api_access_key = 'O4q5fFLVNZZR3m0I1K_z5-GXMxW4WOYyWHv1e7hvQqo';
+let count = 10;
 let apiUrl = `https://api.unsplash.com/photos/random?client_id=${api_access_key}&count=${count}`;
 
 let photosArray = [];
@@ -28,8 +25,6 @@ function imagesLoaded() {
     if (imageLoads === totalImagesLoaded) {
         loader.hidden = true;
         loadMoreImages = true;
-        count = 10;
-        apiUrl = `https://api.unsplash.com/photos/random?client_id=${api_access_key}&count=${count}`;
     }
 }
 
