@@ -1,5 +1,5 @@
 const videoElement = document.getElementById('video');
-const startBtn = document.getElementById('start');
+const toggleBtn = document.getElementById('toggle');
 
 async function selectMediaStream() {
     try {
@@ -14,10 +14,12 @@ async function selectMediaStream() {
      }
 }
 
-startBtn.addEventListener('click', () => {
-    startBtn.disabled = true;
-    videoElement.requestPictureInPicture();
-    startBtn.disabled = false;
+toggleBtn.addEventListener('click', () => {
+    if (document.pictureInPictureElement) {
+        document.exitPictureInPicture();
+    } else {
+        videoElement.requestPictureInPicture().catch(err => console.log(err));
+    }
 })
 
 
